@@ -94,6 +94,7 @@ export function initScrollAnimations() {
 
   // Service cards — slide in from bottom
   const serviceCards = document.querySelectorAll('.service-card');
+  const serviceGrid = document.querySelector('.service-grid');
   if (serviceCards.length) {
     gsap.fromTo(serviceCards,
       { opacity: 0, y: 40 },
@@ -106,6 +107,22 @@ export function initScrollAnimations() {
         },
       }
     );
+  }
+
+  // Service cards — auto-scroll demo on mobile
+  if (serviceGrid && window.innerWidth <= 640) {
+    ScrollTrigger.create({
+      trigger: '.services',
+      start: 'top 60%',
+      once: true,
+      onEnter: () => {
+        const cardWidth = serviceCards[0]?.offsetWidth || 200;
+        const scrollAmount = cardWidth + 14;
+        const tl = gsap.timeline();
+        tl.to(serviceGrid, { scrollLeft: scrollAmount, duration: 0.8, ease: 'power2.inOut', delay: 0.6 });
+        tl.to(serviceGrid, { scrollLeft: 0, duration: 0.8, ease: 'power2.inOut', delay: 0.3 });
+      },
+    });
   }
 
   // Experience strip — numbered items

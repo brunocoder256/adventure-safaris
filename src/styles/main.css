@@ -15,7 +15,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -23,6 +23,19 @@ body {
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+button { cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+
+@media (max-width: 640px) {
+  html { overscroll-behavior: none; }
+  body { -webkit-tap-highlight-color: transparent; }
+  .section, .final-cta { contain: layout; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1279,7 +1292,7 @@ body {
   .hero { min-height: 730px; height: 100svh; }
   .hero-shade { background: linear-gradient(0deg, rgba(3,14,9,.93) 0%, rgba(3,14,9,.46) 50%, rgba(3,14,9,.5) 100%); }
   .hero-content { top: 48%; left: 20px; width: calc(100% - 40px); }
-  .hero h1 { font-size: clamp(54px, 17vw, 78px); margin: 18px 0 20px; }
+  .hero h1 { font-size: clamp(48px, 15vw, 78px); margin: 18px 0 20px; }
   .hero-content > p { font-size: 14px; line-height: 1.55; }
   .hero-actions { margin-top: 22px; }
   .btn { min-height: 36px; padding: 0 12px; }
@@ -1297,13 +1310,13 @@ body {
   .ticker span { font-size: 8px; }
   .section { padding: 75px 20px; }
   .intro-layout { gap: 30px; }
-  .intro h2, .section-head h2, .services h2, .journey h2, .story h2, .booking h2 { font-size: 43px; }
+  .intro h2, .section-head h2, .services h2, .journey h2, .story h2, .booking h2, .final-content h2 { font-size: 43px; }
   .intro-copy p { font-size: 14px; }
   .experience-strip { margin-top: 55px; grid-template-columns: 1fr; }
   .experience-strip > div, .experience-strip > div:not(:first-child) { border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 0; }
   .experience-strip > div:last-child { border-bottom: 0; }
   .section-head { display: block; margin-bottom: 30px; }
-  .search-box { margin-top: 24px; width: 100%; }
+  .search-box { margin-top: 24px; width: 100%; min-width: 0; }
   .destination-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .destination-card, .destination-card.tall { grid-column: span 1; height: 330px; border-radius: 18px; }
   .destination-card.tall { grid-column: span 2; height: 430px; }
@@ -1313,9 +1326,47 @@ body {
   .card-info small { font-size: 7px; }
   .card-no { top: 15px; left: 15px; }
   .services { display: block; }
-  .service-grid { grid-template-columns: 1fr; }
-  .service-card { min-height: 225px; padding: 23px; }
+  .service-grid {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 20px;
+    -webkit-overflow-scrolling: touch;
+    perspective: 900px;
+    padding: 10px 20px 20px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+  }
+  .service-grid::-webkit-scrollbar { display: none; }
+  .service-card {
+    flex: 0 0 78%;
+    min-height: 225px;
+    padding: 23px;
+    scroll-snap-align: center;
+    transform: rotateY(-4deg) scale(0.96);
+    transform-style: preserve-3d;
+    transition: transform .4s ease, opacity .4s ease, box-shadow .4s ease;
+    opacity: .7;
+  }
+  .service-card:first-child { scroll-snap-align: start; margin-left: 0; }
+  .service-card:last-child { scroll-snap-align: end; margin-right: 0; }
+  .service-card:hover, .service-card:active {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(3,14,9,.12);
+  }
   .service-icon { margin-bottom: 28px; }
+  .services::after {
+    content: '← swipe →';
+    display: block;
+    text-align: center;
+    font: 500 9px/1 Manrope;
+    letter-spacing: .2em;
+    color: var(--muted);
+    margin-top: 16px;
+    opacity: .6;
+  }
   .journey { display: block; padding: 70px 20px; }
   .globe-stage { height: 340px; }
   .story { grid-template-columns: 1fr; }
@@ -1329,9 +1380,78 @@ body {
   .footer-top { grid-template-columns: 1fr; padding: 40px 20px 30px; }
   .footer-bottom { flex-direction: column; gap: 6px; padding: 16px 20px; }
   .discover-dynamic { font-size: 28px; }
+  .mobile-drawer { padding: 20px; }
+  .drawer-top { margin-bottom: 35px; }
+  .mobile-drawer > a:not(.drawer-book) { font-size: 24px; padding: 11px 0; }
+}
+
+@media (max-width: 414px) {
+  .hero h1 { font-size: clamp(42px, 14vw, 64px); }
+  .intro h2, .section-head h2, .services h2, .journey h2, .story h2, .booking h2, .final-content h2 { font-size: 38px; }
+  .destination-card { height: 300px; }
+  .destination-card.tall { height: 380px; }
+  .globe-stage { height: 320px; }
+  .story-image { height: 320px; }
 }
 
 @media (max-width: 375px) {
   .destination-grid { grid-template-columns: 1fr; }
   .destination-card.tall { grid-column: span 1; }
+  .hero h1 { font-size: clamp(40px, 14vw, 60px); }
+  .hero-content > p { font-size: 13px; }
+  .intro h2, .section-head h2, .services h2, .journey h2, .story h2, .booking h2, .final-content h2 { font-size: 34px; }
+  .section { padding: 60px 16px; }
+  .booking-card { padding: 20px; gap: 22px; border-radius: 16px; }
+  .destination-card { height: 280px; }
+  .destination-card.tall { height: 340px; }
+  .card-info h3 { font-size: 20px; }
+  .story-image { height: 280px; }
+  .globe-stage { height: 280px; }
+  .final-cta { padding: 80px 16px; }
+  .final-content h2 { font-size: 30px; }
+  .footer-top { padding: 30px 16px 24px; }
+  .footer-bottom { padding: 14px 16px; font-size: 10px; }
+  .discover-dynamic { font-size: 22px; }
+  .floating-actions { bottom: 82px; right: 16px; }
+  .float-whatsapp, .float-call { width: 48px; height: 48px; }
+  .float-whatsapp svg { width: 20px; }
+  .float-call svg { width: 18px; }
+  .mobile-bottom-nav { padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); }
+  .mobile-bottom-nav a { font-size: 8px; padding: 3px 6px; }
+  .mobile-bottom-nav a svg { width: 18px; height: 18px; }
+  .bottom-book span { width: 44px; height: 44px; }
+  .hero-actions .btn { font-size: 11px; padding: 10px 14px; }
+  .hero-actions .btn-glass { flex: 0 0 44px; }
+  .hero-actions .btn-glass svg { width: 16px; }
+  .promise-list b { font-size: 13px; }
+  .promise-list small { font-size: 12px; }
+  .contact-mini a { padding: 12px; }
+  .contact-mini b { font-size: 13px; }
+  .preloader-logo { width: 64px; height: 64px; border-radius: 16px; padding: 12px; }
+}
+
+@media (max-width: 320px) {
+  .hero h1 { font-size: 36px; }
+  .hero-content > p { font-size: 12px; }
+  .intro h2, .section-head h2, .services h2, .journey h2, .story h2, .booking h2, .final-content h2 { font-size: 28px; }
+  .section { padding: 50px 14px; }
+  .brand b { font-size: 10px; }
+  .brand small { font-size: 6px; }
+  .brand-logo-wrap { width: 38px; height: 38px; border-radius: 10px; }
+  .brand-logo-wrap img { width: 26px; height: 26px; }
+  .destination-card { height: 240px; }
+  .destination-card.tall { height: 300px; }
+  .booking-card { padding: 16px; gap: 18px; }
+  .booking-form label { font-size: 10px; }
+  .booking-form input, .booking-form select, .booking-form textarea { padding: 12px 14px; font-size: 13px; }
+  .btn-whatsapp { font-size: 11px; padding: 10px 14px; }
+  .footer-links { gap: 16px; }
+  .footer-links a { font-size: 11px; }
+  .globe-stage { height: 240px; }
+  .story-image { height: 240px; }
+  .discover-dynamic { font-size: 20px; }
+  .search-box { padding: 10px 14px; min-width: 0; }
+  .search-box input { font-size: 12px; }
+  .btn { min-height: 32px; padding: 0 10px; font-size: 11px; }
+  .btn svg { width: 14px; }
 }
