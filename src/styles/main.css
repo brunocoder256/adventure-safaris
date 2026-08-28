@@ -41,9 +41,41 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
+
+/* Animated dark gradient base */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes gradientShiftAlt {
+  0% { background-position: 100% 0%; }
+  25% { background-position: 0% 100%; }
+  50% { background-position: 0% 0%; }
+  75% { background-position: 100% 100%; }
+  100% { background-position: 100% 0%; }
+}
+.dark-gradient {
+  background: linear-gradient(135deg, #07110d, #0d1c15, #0a1a12, #07110d, #0f1f17);
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease infinite;
+}
+.dark-gradient-alt {
+  background: linear-gradient(225deg, #07110d, #111a16, #0d1c15, #07110d, #0a1510);
+  background-size: 300% 300%;
+  animation: gradientShiftAlt 22s ease infinite;
+}
+.dark-gradient-slow {
+  background: linear-gradient(160deg, #07070c, #0d1510, #07110d, #0a0f0c, #07070c);
+  background-size: 400% 400%;
+  animation: gradientShift 28s ease infinite;
 }
 
 /* Preloader */
@@ -535,7 +567,9 @@ a { color: inherit; text-decoration: none; }
 /* Ticker */
 .ticker {
   overflow: hidden;
-  background: var(--ink);
+  background: linear-gradient(135deg, #07110d, #0d1c15, #0a1a12, #07110d, #0f1f17);
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease infinite;
   padding: 0;
 }
 .ticker-track {
@@ -1174,7 +1208,9 @@ a { color: inherit; text-decoration: none; }
 
 /* Booking */
 .booking {
-  background: var(--ink);
+  background: linear-gradient(225deg, #07110d, #111a16, #0d1c15, #07110d, #0a1510);
+  background-size: 300% 300%;
+  animation: gradientShiftAlt 22s ease infinite;
   color: #fff;
 }
 .booking-card {
@@ -1284,7 +1320,9 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   padding: 120px clamp(20px, 5vw, 80px);
   overflow: hidden;
-  background: #07070c;
+  background: linear-gradient(160deg, #07070c, #0d1510, #07110d, #0a0f0c, #07070c);
+  background-size: 400% 400%;
+  animation: gradientShift 28s ease infinite;
 }
 #smokeCanvas {
   position: absolute;
@@ -1317,7 +1355,9 @@ a { color: inherit; text-decoration: none; }
 /* Flag Marquee */
 .flag-marquee {
   overflow: hidden;
-  background: var(--ink);
+  background: linear-gradient(135deg, #07110d, #0d1c15, #0a1a12, #07110d, #0f1f17);
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease infinite;
   padding: 28px 0;
   position: relative;
   mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
@@ -1374,7 +1414,9 @@ a { color: inherit; text-decoration: none; }
 
 /* Footer */
 .footer {
-  background: var(--ink);
+  background: linear-gradient(225deg, #07110d, #111a16, #0d1c15, #07110d, #0a1510);
+  background-size: 300% 300%;
+  animation: gradientShiftAlt 22s ease infinite;
   color: rgba(255,255,255,.65);
   border-top: 1px solid rgba(255,255,255,.06);
 }
