@@ -3,6 +3,7 @@ import { EarthExperience } from './earth/EarthExperience.js';
 import { initScrollAnimations } from './animations/scroll.js';
 import { initTextAnimations } from './animations/text.js';
 import { initInteractions } from './animations/interactions.js';
+import { initSmokeParticles } from './animations/smoke.js';
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
       stage.classList.add('earth-fallback');
     }
   }
+
+  // Initialize smoke particles
+  initSmokeParticles();
 
   // Initialize animations and interactions
   initScrollAnimations();

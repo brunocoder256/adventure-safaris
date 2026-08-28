@@ -195,7 +195,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   text-decoration: none;
   border: 0;
   cursor: pointer;
@@ -205,15 +205,15 @@ body {
 .header-cta {
   background: var(--gold2);
   color: var(--ink);
-  padding: 9px 18px;
-  border-radius: 10px;
-  font-size: 11px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 10px;
   font-family: Manrope;
   letter-spacing: .05em;
   text-transform: uppercase;
   transition: .25s;
 }
-.header-cta svg { width: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+.header-cta svg { width: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 .header-cta:hover { background: #fff; }
 
 .menu-btn {
@@ -364,53 +364,52 @@ body {
 .btn-primary {
   background: var(--gold2);
   color: var(--ink);
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 12px;
   font-family: Manrope;
   transition: .25s;
 }
-.btn-primary svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.btn-primary svg { width: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 .btn-primary:hover { background: #fff; transform: translateY(-2px); }
 .btn-glass {
-  background: rgba(255,255,255,.1);
+  background: rgba(255,255,255,.08);
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 13px;
-  border: 1px solid rgba(255,255,255,.15);
-  backdrop-filter: blur(8px);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,.1);
   transition: .25s;
 }
-.btn-glass svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
-.btn-glass:hover { background: rgba(255,255,255,.18); }
+.btn-glass svg { width: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+.btn-glass:hover { background: rgba(255,255,255,.15); }
 .btn-dark {
   background: var(--ink);
   color: var(--cream);
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 12px;
   font-family: Manrope;
   transition: .25s;
 }
-.btn-dark svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.btn-dark svg { width: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 .btn-dark:hover { background: var(--gold2); color: var(--ink); }
 .btn-whatsapp {
   background: #25d366;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
   width: 100%;
   transition: .25s;
 }
-.btn-whatsapp svg { width: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+.btn-whatsapp svg { width: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
 .btn-whatsapp:hover { background: #1da851; }
 
 .trust-row {
   display: flex;
   gap: 24px;
-  margin-top: 40px;
+  margin-top: 25px;
   align-items: center;
 }
 .trust-row div { flex: 1; }
@@ -1051,17 +1050,16 @@ body {
   position: relative;
   padding: 120px clamp(20px, 5vw, 80px);
   overflow: hidden;
+  background: #07070c;
 }
-.final-bg {
+#smokeCanvas {
   position: absolute;
   inset: 0;
-  background: var(--ink);
-}
-.final-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 30% 60%, rgba(210,168,63,.08) 0%, transparent 70%);
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  cursor: crosshair;
+  touch-action: none;
 }
 .final-content {
   position: relative;
@@ -1259,7 +1257,7 @@ body {
   .hero h1 { font-size: clamp(54px, 17vw, 78px); margin: 18px 0 20px; }
   .hero-content > p { font-size: 14px; line-height: 1.55; }
   .hero-actions { margin-top: 22px; }
-  .btn { min-height: 40px; padding: 0 14px; }
+  .btn { min-height: 36px; padding: 0 12px; }
   .hero-actions .btn { flex: 1; }
   .hero-actions .btn-glass { flex: 0 0 50px; font-size: 0; }
   .hero-actions .btn-glass svg { width: 18px; }
