@@ -1,4 +1,15 @@
 export function initInteractions() {
+  // Hero image slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length > 1) {
+    let slideIndex = 0;
+    setInterval(() => {
+      slides[slideIndex].classList.remove('active');
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add('active');
+    }, 6500);
+  }
+
   // Magnetic effect on desktop buttons
   if (window.matchMedia('(pointer: fine)').matches) {
     document.querySelectorAll('.btn, .header-cta').forEach(btn => {
