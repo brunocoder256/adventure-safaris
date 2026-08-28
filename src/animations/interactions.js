@@ -1,3 +1,5 @@
+import gsap from 'gsap';
+
 export function initInteractions() {
   // Hero image slideshow
   const slides = document.querySelectorAll('.hero-slide');
@@ -135,5 +137,59 @@ export function initInteractions() {
     } else {
       document.body.classList.remove('tab-hidden');
     }
+  });
+
+  // FAQ background slideshow
+  const faqSlides = document.querySelectorAll('.faq-bg-slide');
+  if (faqSlides.length > 1) {
+    let faqIndex = 0;
+    setInterval(() => {
+      faqSlides[faqIndex].classList.remove('active');
+      faqIndex = (faqIndex + 1) % faqSlides.length;
+      faqSlides[faqIndex].classList.add('active');
+    }, 3500);
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const answer = item.querySelector('.faq-a');
+    const inner = item.querySelector('.faq-a-inner');
+    if (!btn || !answer || !inner) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      // Close all other items
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('open');
+          other.querySelector('.faq-q')?.setAttribute('aria-expanded', 'false');
+          const otherAnswer = other.querySelector('.faq-a');
+          const otherInner = other.querySelector('.faq-a-inner');
+          if (otherAnswer && otherInner) {
+            gsap.to(otherAnswer, { height: 0, duration: 0.35, ease: 'power2.inOut' });
+            otherAnswer.setAttribute('aria-hidden', 'true');
+          }
+        }
+      });
+
+      if (isOpen) {
+        // Close current
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        gsap.to(answer, { height: 0, duration: 0.35, ease: 'power2.inOut' });
+        answer.setAttribute('aria-hidden', 'true');
+      } else {
+        // Open current
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        answer.setAttribute('aria-hidden', 'false');
+        gsap.fromTo(answer,
+          { height: 0 },
+          { height: inner.offsetHeight + 20, duration: 0.4, ease: 'power2.out' }
+        );
+      }
+    });
   });
 }
