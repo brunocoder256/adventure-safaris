@@ -23,6 +23,59 @@ export function initScrollAnimations() {
     );
   });
 
+  // 3D text line animations — each line flips in with perspective
+  const text3dGroups = document.querySelectorAll('.text-3d');
+  text3dGroups.forEach(group => {
+    const lines = group.querySelectorAll('.text-3d-line');
+    if (!lines.length) return;
+
+    // Set initial 3D state
+    gsap.set(lines, {
+      rotationX: -70,
+      rotationY: 15,
+      opacity: 0,
+      y: 40,
+      transformOrigin: 'center bottom',
+      filter: 'blur(4px)',
+    });
+
+    // Determine if hero (plays on load) or scroll-triggered
+    const isHero = group.closest('.hero');
+
+    if (isHero) {
+      // Hero: animate on page load with stagger
+      gsap.to(lines, {
+        rotationX: 0,
+        rotationY: 0,
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 1.1,
+        ease: 'power3.out',
+        stagger: 0.18,
+        delay: 2.2,
+      });
+    } else {
+      // Scroll-triggered sections
+      const section = group.closest('section') || group.closest('.final-cta');
+      gsap.to(lines, {
+        rotationX: 0,
+        rotationY: 0,
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 78%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }
+  });
+
   // Destination cards — staggered entrance
   const destCards = document.querySelectorAll('.destination-card');
   if (destCards.length) {
