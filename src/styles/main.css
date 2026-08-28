@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Color+Emoji&display=swap');
 
 :root {
   --ink: #07110d;
@@ -524,6 +524,7 @@ body {
   letter-spacing: .22em;
   color: var(--gold2);
 }
+.ticker-track span { display: inline-flex; align-items: center; gap: 6px; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', Manrope, sans-serif; }
 .ticker b { opacity: .35; }
 
 /* Section base */
