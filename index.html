@@ -81,9 +81,9 @@
   <main>
     <section class="hero" id="home">
       <div class="hero-media" id="heroMedia">
-        <img class="hero-slide active" src="assets/images (2).jfif" alt="Safari vehicle on an East African savannah">
-        <img class="hero-slide" src="assets/download.jfif" alt="Safari encounter with elephants">
-        <img class="hero-slide" src="assets/images (13).jfif" alt="Wildlife safari vehicle in East Africa">
+        <img class="hero-slide active" src="https://images.unsplash.com/photo-1742327781369-12f428e46c37?auto=format&amp;fit=crop&amp;fm=jpg&amp;q=88&amp;w=2400" alt="African elephant crossing the savannah in Uganda" fetchpriority="high">
+        <img class="hero-slide" src="https://images.unsplash.com/photo-1776773109742-ef7dcb0cf0d0?auto=format&amp;fit=crop&amp;fm=jpg&amp;q=88&amp;w=2400" alt="Safari travellers exploring the Serengeti in Tanzania" loading="eager">
+        <img class="hero-slide" src="https://images.unsplash.com/photo-1775681918448-d029b8aff5a3?auto=format&amp;fit=crop&amp;fm=jpg&amp;q=88&amp;w=2400" alt="Elephants with a young calf in Kenya's Maasai Mara" loading="eager">
       </div>
       <div class="hero-shade"></div>
       <div class="hero-grid"></div>
@@ -219,29 +219,155 @@
     import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js';
 
     const canvas = document.getElementById('earthCanvas');
-    if (canvas) {
-      const stage = canvas.parentElement;
+    const stage = canvas?.parentElement;
+
+    if (canvas && stage) {
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
-      camera.position.set(0, 0.25, 3.6);
-      const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:'high-performance'});
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+      scene.background = new THREE.Color(0x020806);
+
+      const camera = new THREE.PerspectiveCamera(25, 1, 0.1, 100);
+      camera.position.set(0, 0.05, 3.45);
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas, antialias: true, alpha: false, powerPreference: 'high-performance'
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      const ambient = new THREE.AmbientLight(0x9bd7ff, 1.1); scene.add(ambient);
-      const sun = new THREE.DirectionalLight(0xffffff, 2.2); sun.position.set(3,2,4); scene.add(sun);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+
+      // Deep-space star field so the Earth reads as a real planet rather than a flat card.
+      const starGeometry = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(2600 * 3);
+      for (let i = 0; i < starPositions.length; i += 3) {
+        const r = 18 + Math.random() * 14;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        starPositions[i] = r * Math.sin(phi) * Math.cos(theta);
+        starPositions[i + 1] = r * Math.cos(phi);
+        starPositions[i + 2] = r * Math.sin(phi) * Math.sin(theta);
+      }
+      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      const stars = new THREE.Points(starGeometry, new THREE.PointsMaterial({color: 0xffffff, size: 0.025, transparent: true, opacity: 0.72}));
+      scene.add(stars);
+
+      const sun = new THREE.DirectionalLight(0xffffff, 2.7);
+      sun.position.set(4, 1.8, 4);
+      scene.add(sun);
+      scene.add(new THREE.AmbientLight(0x31506a, 0.18));
+
       const loader = new THREE.TextureLoader();
-      const earthTexture = loader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
-      const earthBump = loader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
-      const globe = new THREE.Mesh(new THREE.SphereGeometry(1,64,64), new THREE.MeshStandardMaterial({map:earthTexture,bumpMap:earthBump,bumpScale:.045,roughness:.82,metalness:.02}));
+      loader.setCrossOrigin('anonymous');
+      const base = 'https://threejs.org/examples/textures/planets/';
+      const dayTexture = loader.load(base + 'earth_day_4096.jpg');
+      const nightTexture = loader.load(base + 'earth_night_4096.jpg');
+      const reliefTexture = loader.load(base + 'earth_bump_roughness_clouds_4096.jpg');
+      dayTexture.colorSpace = THREE.SRGBColorSpace;
+      nightTexture.colorSpace = THREE.SRGBColorSpace;
+      dayTexture.anisotropy = 8;
+      nightTexture.anisotropy = 8;
+      reliefTexture.anisotropy = 8;
+
+      // A physically-inspired day/night blend using a shader. Cities glow on the dark side.
+      const earthMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          dayMap: {value: dayTexture},
+          nightMap: {value: nightTexture},
+          reliefMap: {value: reliefTexture},
+          sunDirection: {value: new THREE.Vector3().copy(sun.position).normalize()}
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          varying vec3 vNormal;
+          varying vec3 vWorldPosition;
+          void main(){
+            vUv = uv;
+            vNormal = normalize(normalMatrix * normal);
+            vec4 world = modelMatrix * vec4(position,1.0);
+            vWorldPosition = world.xyz;
+            gl_Position = projectionMatrix * viewMatrix * world;
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D dayMap;
+          uniform sampler2D nightMap;
+          uniform sampler2D reliefMap;
+          uniform vec3 sunDirection;
+          varying vec2 vUv;
+          varying vec3 vNormal;
+          varying vec3 vWorldPosition;
+          void main(){
+            vec3 day = texture2D(dayMap, vUv).rgb;
+            vec3 night = texture2D(nightMap, vUv).rgb;
+            float cloud = texture2D(reliefMap, vUv).b;
+            float light = dot(normalize(vNormal), normalize(sunDirection));
+            float dayFactor = smoothstep(-0.18, 0.28, light);
+            float twilight = smoothstep(-0.28, 0.18, light) * (1.0 - smoothstep(0.18, 0.52, light));
+            vec3 color = mix(night * 1.45, day, dayFactor);
+            color += vec3(0.12,0.055,0.018) * twilight;
+            color = mix(color, color + vec3(0.08), cloud * max(dayFactor,0.0) * 0.12);
+            gl_FragColor = vec4(color,1.0);
+          }
+        `
+      });
+
+      const globe = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 96), earthMaterial);
       scene.add(globe);
-      const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(1.055,64,64), new THREE.MeshBasicMaterial({color:0x52c8ff,transparent:true,opacity:.13,side:THREE.BackSide}));
+
+      // Cloud layer moves independently, giving the planet visible atmospheric motion.
+      const cloudMaterial = new THREE.MeshPhongMaterial({
+        map: reliefTexture, transparent: true, opacity: 0.30, depthWrite: false,
+        blending: THREE.AdditiveBlending, side: THREE.FrontSide
+      });
+      const clouds = new THREE.Mesh(new THREE.SphereGeometry(1.012, 96, 96), cloudMaterial);
+      scene.add(clouds);
+
+      // Thin blue atmospheric shell.
+      const atmosphere = new THREE.Mesh(
+        new THREE.SphereGeometry(1.075, 96, 96),
+        new THREE.ShaderMaterial({
+          uniforms: {cameraPos: {value: camera.position}},
+          vertexShader: `varying vec3 vNormal; void main(){vNormal=normalize(normalMatrix*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+          fragmentShader: `varying vec3 vNormal; void main(){float edge=pow(1.0-max(dot(vNormal,vec3(0.0,0.0,1.0)),0.0),2.7); gl_FragColor=vec4(0.20,0.67,1.0,edge*0.24);}`,
+          side: THREE.BackSide, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+        })
+      );
       scene.add(atmosphere);
+
       const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true; controls.enablePan = false; controls.minDistance=2.4; controls.maxDistance=5; controls.autoRotate=true; controls.autoRotateSpeed=.55;
-      function resize(){const r=stage.getBoundingClientRect(); renderer.setSize(r.width,r.height,false); camera.aspect=r.width/r.height; camera.updateProjectionMatrix();}
-      new ResizeObserver(resize).observe(stage); resize();
-      function tick(){globe.rotation.y += 0.0009; atmosphere.rotation.y += 0.0007; controls.update(); renderer.render(scene,camera); requestAnimationFrame(tick);}
-      tick();
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.045;
+      controls.enablePan = false;
+      controls.minDistance = 2.15;
+      controls.maxDistance = 5.2;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.48;
+      controls.rotateSpeed = 0.55;
+      controls.zoomSpeed = 0.55;
+
+      let last = performance.now();
+      function resize(){
+        const r = stage.getBoundingClientRect();
+        const w = Math.max(1, Math.floor(r.width));
+        const h = Math.max(1, Math.floor(r.height));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(stage);
+      resize();
+
+      function animate(now){
+        const delta = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        globe.rotation.y += delta * 0.025;
+        clouds.rotation.y += delta * 0.034;
+        stars.rotation.y += delta * 0.0015;
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
     }
   </script>
   <script src="script.js" defer></script>

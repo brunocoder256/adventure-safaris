@@ -18,3 +18,7 @@ Static, mobile-first website built with HTML, CSS and JavaScript.
 Open `index.html` in a modern browser or serve the folder with any static server.
 
 For production, replace the placeholder canonical/domain URLs with the real domain and add the final Google Business Profile/social links.
+
+
+## Updated visual assets
+The home hero uses high-resolution remote images from Unsplash, selected for safari/wildlife presentation and loaded at up to 2400px width. The 3D Earth uses the Three.js Earth texture set and is rendered interactively with WebGL, including day/night city lights, moving clouds, atmosphere, stars, drag rotation and scroll/pinch zoom.
