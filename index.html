@@ -36,9 +36,15 @@
     "serviceType":["Safari tours","Tourism","Travel transportation","Car hire","Hotel reservations","Airbnb reservations","Delivery services","Travel consultancy"]
   }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="/src/main.js"></script>
 </head>
 <body>
+  <div class="preloader" id="preloader">
+    <img class="preloader-logo" src="assets/Adenture Safaris East Africa logo.png" alt="Loading">
+    <div class="preloader-text">Adventure Safaris East Africa</div>
+    <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+  </div>
+
   <div class="noise"></div>
   <div class="progress" id="scrollProgress"></div>
 
@@ -59,7 +65,7 @@
 
   <header class="site-header" id="top">
     <a class="brand" href="#home" aria-label="Adventure Safaris East Africa home">
-      <img src="assets/Adenture Safaris East Africa logo.png" alt="Adventure Safaris East Africa logo">
+      <span class="brand-logo-wrap"><img src="assets/Adenture Safaris East Africa logo.png" alt="Adventure Safaris East Africa logo"></span>
       <span><b>ADVENTURE</b><small>SAFARIS EAST AFRICA</small></span>
     </a>
     <nav class="desktop-nav" aria-label="Main navigation">
@@ -93,7 +99,7 @@
         <p>Wild places. Human stories. Seamless travel. We design East African journeys that stay with you long after the road ends.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#booking">Design my adventure <svg><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-glass" href="tel:0761890792"><svg><use href="#i-phone"/></svg> 0761 890 792</a>
+          <a class="btn btn-glass" href="tel:+256761890792"><svg><use href="#i-phone"/></svg> 0761 890 792</a>
         </div>
         <div class="trust-row">
           <div><strong>8+</strong><span>Countries covered</span></div><i></i>
@@ -185,7 +191,7 @@
 
     <section class="booking section" id="booking">
       <div class="booking-card reveal">
-        <div class="booking-copy"><div class="section-kicker">LET'S MAKE IT REAL</div><h2>Your next story<br>starts <span>here.</span></h2><p>Tell us the destination, dates and vibe. We'll turn the rough idea into a clear next step on WhatsApp.</p><div class="contact-mini"><a href="tel:0761890792"><svg><use href="#i-phone"/></svg><span><small>CALL US</small><b>0761 890 792</b></span></a><a href="https://wa.me/256761890792" target="_blank" rel="noopener"><svg><use href="#i-chat"/></svg><span><small>WHATSAPP</small><b>Chat with Adventure</b></span></a></div></div>
+        <div class="booking-copy"><div class="section-kicker">LET'S MAKE IT REAL</div><h2>Your next story<br>starts <span>here.</span></h2><p>Tell us the destination, dates and vibe. We'll turn the rough idea into a clear next step on WhatsApp.</p><div class="contact-mini"><a href="tel:+256761890792"><svg><use href="#i-phone"/></svg><span><small>CALL US</small><b>0761 890 792</b></span></a><a href="https://wa.me/256761890792" target="_blank" rel="noopener"><svg><use href="#i-chat"/></svg><span><small>WHATSAPP</small><b>Chat with Adventure</b></span></a></div></div>
         <form class="booking-form" id="bookingForm">
           <label>Your name<input required id="name" name="name" autocomplete="name" placeholder="e.g. Bruno"></label>
           <label>Destination<select id="destination" name="destination"><option value="">Choose a destination</option><option>Uganda</option><option>Rwanda</option><option>Kenya</option><option>Tanzania</option><option>South Sudan</option><option>Western Congo</option><option>Ethiopia</option><option>Sudan</option><option>Not sure yet</option></select></label>
@@ -204,172 +210,14 @@
   </main>
 
   <footer class="footer">
-    <div class="footer-top"><a class="brand" href="#home"><img src="assets/Adenture Safaris East Africa logo.png" alt="Adventure Safaris East Africa logo"><span><b>ADVENTURE</b><small>SAFARIS EAST AFRICA</small></span></a><p>Safari design • transport • stays • consultancy<br>East Africa, connected.</p><div class="footer-links"><a href="#destinations">Destinations</a><a href="#services">Services</a><a href="#booking">Booking</a><a href="tel:0761890792">Call</a></div></div>
+    <div class="footer-top"><a class="brand" href="#home"><span class="brand-logo-wrap"><img src="assets/Adenture Safaris East Africa logo.png" alt="Adventure Safaris East Africa logo"></span><span><b>ADVENTURE</b><small>SAFARIS EAST AFRICA</small></span></a><p>Safari design • transport • stays • consultancy<br>East Africa, connected.</p><div class="footer-links"><a href="#destinations">Destinations</a><a href="#services">Services</a><a href="#booking">Booking</a><a href="tel:+256761890792">Call</a></div></div>
     <div class="footer-bottom"><span>© <span id="year"></span> Adventure Safaris East Africa. All rights reserved.</span><span>Built for curious travellers.</span></div>
   </footer>
 
-  <div class="floating-actions"><a class="float-whatsapp" href="https://wa.me/256761890792" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg><use href="#i-chat"/></svg><span>WhatsApp</span></a><a class="float-call" href="tel:0761890792" aria-label="Call Adventure Safaris"><svg><use href="#i-phone"/></svg></a></div>
+  <div class="floating-actions"><a class="float-whatsapp" href="https://wa.me/256761890792" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg><use href="#i-chat"/></svg><span>WhatsApp</span></a><a class="float-call" href="tel:+256761890792" aria-label="Call Adventure Safaris"><svg><use href="#i-phone"/></svg></a></div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
     <a class="active" href="#home"><svg><use href="#i-map"/></svg><span>Home</span></a><a href="#destinations"><svg><use href="#i-compass"/></svg><span>Explore</span></a><a class="bottom-book" href="#booking"><span><svg><use href="#i-arrow"/></svg></span><label>Book</label></a><a href="#services"><svg><use href="#i-star"/></svg><span>Services</span></a><a href="#contact"><svg><use href="#i-chat"/></svg><span>Contact</span></a>
   </nav>
-
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
-    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js';
-
-    const canvas = document.getElementById('earthCanvas');
-    const stage = canvas?.parentElement;
-
-    if (canvas && stage) {
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x020806);
-
-      const camera = new THREE.PerspectiveCamera(25, 1, 0.1, 100);
-      camera.position.set(0, 0.05, 3.45);
-
-      const renderer = new THREE.WebGLRenderer({
-        canvas, antialias: true, alpha: false, powerPreference: 'high-performance'
-      });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.05;
-
-      // Deep-space star field so the Earth reads as a real planet rather than a flat card.
-      const starGeometry = new THREE.BufferGeometry();
-      const starPositions = new Float32Array(2600 * 3);
-      for (let i = 0; i < starPositions.length; i += 3) {
-        const r = 18 + Math.random() * 14;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        starPositions[i] = r * Math.sin(phi) * Math.cos(theta);
-        starPositions[i + 1] = r * Math.cos(phi);
-        starPositions[i + 2] = r * Math.sin(phi) * Math.sin(theta);
-      }
-      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-      const stars = new THREE.Points(starGeometry, new THREE.PointsMaterial({color: 0xffffff, size: 0.025, transparent: true, opacity: 0.72}));
-      scene.add(stars);
-
-      const sun = new THREE.DirectionalLight(0xffffff, 2.7);
-      sun.position.set(4, 1.8, 4);
-      scene.add(sun);
-      scene.add(new THREE.AmbientLight(0x31506a, 0.18));
-
-      const loader = new THREE.TextureLoader();
-      loader.setCrossOrigin('anonymous');
-      const base = 'https://threejs.org/examples/textures/planets/';
-      const dayTexture = loader.load(base + 'earth_day_4096.jpg');
-      const nightTexture = loader.load(base + 'earth_night_4096.jpg');
-      const reliefTexture = loader.load(base + 'earth_bump_roughness_clouds_4096.jpg');
-      dayTexture.colorSpace = THREE.SRGBColorSpace;
-      nightTexture.colorSpace = THREE.SRGBColorSpace;
-      dayTexture.anisotropy = 8;
-      nightTexture.anisotropy = 8;
-      reliefTexture.anisotropy = 8;
-
-      // A physically-inspired day/night blend using a shader. Cities glow on the dark side.
-      const earthMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          dayMap: {value: dayTexture},
-          nightMap: {value: nightTexture},
-          reliefMap: {value: reliefTexture},
-          sunDirection: {value: new THREE.Vector3().copy(sun.position).normalize()}
-        },
-        vertexShader: `
-          varying vec2 vUv;
-          varying vec3 vNormal;
-          varying vec3 vWorldPosition;
-          void main(){
-            vUv = uv;
-            vNormal = normalize(normalMatrix * normal);
-            vec4 world = modelMatrix * vec4(position,1.0);
-            vWorldPosition = world.xyz;
-            gl_Position = projectionMatrix * viewMatrix * world;
-          }
-        `,
-        fragmentShader: `
-          uniform sampler2D dayMap;
-          uniform sampler2D nightMap;
-          uniform sampler2D reliefMap;
-          uniform vec3 sunDirection;
-          varying vec2 vUv;
-          varying vec3 vNormal;
-          varying vec3 vWorldPosition;
-          void main(){
-            vec3 day = texture2D(dayMap, vUv).rgb;
-            vec3 night = texture2D(nightMap, vUv).rgb;
-            float cloud = texture2D(reliefMap, vUv).b;
-            float light = dot(normalize(vNormal), normalize(sunDirection));
-            float dayFactor = smoothstep(-0.18, 0.28, light);
-            float twilight = smoothstep(-0.28, 0.18, light) * (1.0 - smoothstep(0.18, 0.52, light));
-            vec3 color = mix(night * 1.45, day, dayFactor);
-            color += vec3(0.12,0.055,0.018) * twilight;
-            color = mix(color, color + vec3(0.08), cloud * max(dayFactor,0.0) * 0.12);
-            gl_FragColor = vec4(color,1.0);
-          }
-        `
-      });
-
-      const globe = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 96), earthMaterial);
-      scene.add(globe);
-
-      // Cloud layer moves independently, giving the planet visible atmospheric motion.
-      const cloudMaterial = new THREE.MeshPhongMaterial({
-        map: reliefTexture, transparent: true, opacity: 0.30, depthWrite: false,
-        blending: THREE.AdditiveBlending, side: THREE.FrontSide
-      });
-      const clouds = new THREE.Mesh(new THREE.SphereGeometry(1.012, 96, 96), cloudMaterial);
-      scene.add(clouds);
-
-      // Thin blue atmospheric shell.
-      const atmosphere = new THREE.Mesh(
-        new THREE.SphereGeometry(1.075, 96, 96),
-        new THREE.ShaderMaterial({
-          uniforms: {cameraPos: {value: camera.position}},
-          vertexShader: `varying vec3 vNormal; void main(){vNormal=normalize(normalMatrix*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
-          fragmentShader: `varying vec3 vNormal; void main(){float edge=pow(1.0-max(dot(vNormal,vec3(0.0,0.0,1.0)),0.0),2.7); gl_FragColor=vec4(0.20,0.67,1.0,edge*0.24);}`,
-          side: THREE.BackSide, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
-        })
-      );
-      scene.add(atmosphere);
-
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.045;
-      controls.enablePan = false;
-      controls.minDistance = 2.15;
-      controls.maxDistance = 5.2;
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = 0.48;
-      controls.rotateSpeed = 0.55;
-      controls.zoomSpeed = 0.55;
-
-      let last = performance.now();
-      function resize(){
-        const r = stage.getBoundingClientRect();
-        const w = Math.max(1, Math.floor(r.width));
-        const h = Math.max(1, Math.floor(r.height));
-        renderer.setSize(w, h, false);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-      }
-      new ResizeObserver(resize).observe(stage);
-      resize();
-
-      function animate(now){
-        const delta = Math.min((now - last) / 1000, 0.05);
-        last = now;
-        globe.rotation.y += delta * 0.025;
-        clouds.rotation.y += delta * 0.034;
-        stars.rotation.y += delta * 0.0015;
-        controls.update();
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
-    }
-  </script>
-  <script src="script.js" defer></script>
 </body>
 </html>

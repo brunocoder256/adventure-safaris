@@ -1,24 +1,84 @@
 # Adventure Safaris East Africa Website
 
-Static, mobile-first website built with HTML, CSS and JavaScript.
+Premium travel website with interactive 3D Earth, built with Vite, Three.js, GSAP and vanilla JavaScript.
 
-## Included
-- Responsive desktop/mobile layout
+## Features
+
+- Interactive 3D Earth with day/night cycle, clouds, atmosphere, and stars
+- WebGL renderer with automatic fallback
+- GSAP scroll animations, parallax, and micro-interactions
+- Hero image slider with cinematic transitions
+- Destination cards for 8 East African countries
+- Service cards with tilt effects
+- WhatsApp booking form
+- Click-to-call integration
+- Custom cursor (desktop)
+- Preloader animation
 - Mobile bottom navigation
-- Animated hero image sequence and scrolling ticker
-- Destination search/filter for 8 countries/regions
-- Safari, transport, car hire, hotel/Airbnb, delivery and consultancy services
-- Interactive Three.js Earth section
-- WhatsApp booking form wired to +256 761 890 792
-- Click-to-call using 0761 890 792
-- SEO meta tags, Open Graph, JSON-LD TravelAgency schema, robots.txt, sitemap.xml and web manifest
-- Supplied brand logo and safari images reused locally for faster page loading
+- Responsive design (320px–1920px+)
+- SEO meta tags, Open Graph, JSON-LD TravelAgency schema
+- Accessibility: semantic HTML, keyboard nav, reduced-motion support
 
 ## Run
-Open `index.html` in a modern browser or serve the folder with any static server.
 
-For production, replace the placeholder canonical/domain URLs with the real domain and add the final Google Business Profile/social links.
+```bash
+npm install
+npm run dev
+```
 
+## Build
 
-## Updated visual assets
-The home hero uses high-resolution remote images from Unsplash, selected for safari/wildlife presentation and loaded at up to 2400px width. The 3D Earth uses the Three.js Earth texture set and is rendered interactively with WebGL, including day/night city lights, moving clouds, atmosphere, stars, drag rotation and scroll/pinch zoom.
+```bash
+npm run build
+```
+
+Output goes to `dist/`.
+
+## Preview production build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+├── index.html
+├── package.json
+├── vite.config.js
+├── .gitignore
+├── public/
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── manifest.webmanifest
+│   └── assets/
+├── src/
+│   ├── main.js
+│   ├── earth/
+│   │   └── EarthExperience.js
+│   ├── animations/
+│   │   ├── scroll.js
+│   │   ├── text.js
+│   │   └── interactions.js
+│   └── styles/
+│       └── main.css
+└── assets/
+    ├── Adenture Safaris East Africa logo.png
+    └── images*.jfif
+```
+
+## Tech Stack
+
+- **Build:** Vite
+- **3D:** Three.js (WebGL with fallback)
+- **Animation:** GSAP + ScrollTrigger
+- **Styling:** Vanilla CSS
+- **Language:** ES Modules
+
+## Phone
+
+**0761 890 792** / **+256 761 890 792**
+
+## License
+
+ISC
