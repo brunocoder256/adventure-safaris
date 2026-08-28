@@ -308,6 +308,15 @@ body {
   background: linear-gradient(0deg, rgba(3,14,9,.93) 0%, rgba(3,14,9,.46) 50%, rgba(3,14,9,.35) 100%);
   z-index: 1;
 }
+#heroRipple {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: auto;
+  opacity: .6;
+}
 .hero-grid {
   position: absolute;
   inset: 0;

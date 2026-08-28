@@ -4,6 +4,7 @@ import { initScrollAnimations } from './animations/scroll.js';
 import { initTextAnimations } from './animations/text.js';
 import { initInteractions } from './animations/interactions.js';
 import { initSmokeParticles } from './animations/smoke.js';
+import { initWaterRipple } from './animations/ripple.js';
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
       stage.classList.add('earth-fallback');
     }
   }
+
+  // Initialize water ripple in hero
+  initWaterRipple();
 
   // Initialize smoke particles
   initSmokeParticles();
