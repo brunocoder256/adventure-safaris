@@ -1118,6 +1118,64 @@ a { color: inherit; text-decoration: none; }
 }
 .final-content > div { display: flex; gap: 14px; flex-wrap: wrap; }
 
+/* Flag Marquee */
+.flag-marquee {
+  overflow: hidden;
+  background: var(--ink);
+  padding: 28px 0;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+}
+.flag-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: flagScroll 28s linear infinite;
+}
+.flag-marquee-set {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+.flag-marquee-set span {
+  font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  font-size: 46px;
+  line-height: 1;
+  padding: 0 28px;
+  filter: saturate(1.1);
+  transition: transform .3s ease;
+}
+.flag-marquee-set span:hover {
+  transform: scale(1.25);
+}
+.flag-marquee::before,
+.flag-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.flag-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--ink), transparent);
+}
+.flag-marquee::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--ink), transparent);
+}
+@keyframes flagScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-marquee-track { animation: none; }
+}
+
 /* Footer */
 .footer {
   background: var(--ink);
@@ -1375,6 +1433,8 @@ a { color: inherit; text-decoration: none; }
   .form-row { grid-template-columns: 1fr; }
   .final-content > div { flex-direction: column; }
   .final-content .btn { width: 100%; }
+  .flag-marquee { padding: 20px 0; }
+  .flag-marquee-set span { font-size: 36px; padding: 0 20px; }
   .mobile-bottom-nav { display: flex; }
   .floating-actions { bottom: 90px; }
   .footer-top { grid-template-columns: 1fr; padding: 40px 20px 30px; }
@@ -1454,4 +1514,6 @@ a { color: inherit; text-decoration: none; }
   .search-box input { font-size: 12px; }
   .btn { min-height: 32px; padding: 0 10px; font-size: 11px; }
   .btn svg { width: 14px; }
+  .flag-marquee { padding: 16px 0; }
+  .flag-marquee-set span { font-size: 30px; padding: 0 16px; }
 }
